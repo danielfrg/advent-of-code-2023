@@ -22,6 +22,7 @@ func main() {
 	calibrationValues := make([]int, 0) // or slice := make([]int, elems)
 
 	scanner := bufio.NewScanner(file)
+
 	for scanner.Scan() {
 		line := scanner.Text()
 
@@ -99,7 +100,6 @@ func lastDigit(line string) int {
 
 	for _, digit := range stringDigits {
 		index := strings.LastIndex(line, digit)
-		fmt.Println(digit, index, lastIndex)
 		if index != -1 {
 			if index > lastIndex {
 				lastIndex = index
