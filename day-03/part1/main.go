@@ -31,8 +31,6 @@ func main() {
 			cleanIndicesSymbols = append(cleanIndicesSymbols, indicesSymbols[i][0])
 		}
 
-		// fmt.Println(line, cleanIndicesSymbols)
-
 		numbersPerLine = append(numbersPerLine, numbers)
 		numbersIndicesPerLine = append(numbersIndicesPerLine, indices)
 		symbolIndicesPerLine = append(symbolIndicesPerLine, cleanIndicesSymbols)
