@@ -4,7 +4,17 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 )
+
+func Split(input string, sep rune) []string {
+	// Split and remove empty items
+	splitFn := func(c rune) bool {
+		return c == sep
+	}
+	return strings.FieldsFunc(input, splitFn)
+}
 
 func Sum(arr []int) int {
 	sum := 0
@@ -12,6 +22,15 @@ func Sum(arr []int) int {
 		sum += arr[i]
 	}
 	return sum
+}
+
+func ReadFile(fname string) string {
+	content, err := os.ReadFile(fname)
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	return string(content)
 }
 
 func ReadLines(fname string) []string {
@@ -32,4 +51,15 @@ func ReadLines(fname string) []string {
 	}
 
 	return lines
+}
+
+func ToIntSlice(input []string) []int {
+	var s []int
+	for _, number := range input {
+		if number != "" {
+			n, _ := strconv.Atoi(number)
+			s = append(s, n)
+		}
+	}
+	return s
 }
