@@ -24,6 +24,14 @@ func Sum(arr []int) int {
 	return sum
 }
 
+func Multiply(arr []int) int {
+	mult := 1
+	for i := 0; i < len(arr); i++ {
+		mult *= arr[i]
+	}
+	return mult
+}
+
 func ReadFile(fname string) string {
 	content, err := os.ReadFile(fname)
 	if err != nil {
