@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	// input := readInput("input-test.txt")
+	input := readInput("input-test.txt")
 	// printMat(input)
 
-	input := readInput("input.txt")
+	// input := readInput("input.txt")
 
-	input = expand(input)
+	input = expand(input, 10)
 	// printMat(input)
 
 	indices := make(map[int][]int, 0)
@@ -59,7 +59,7 @@ func sum(arr []int) int {
 	return s
 }
 
-func expand(in [][]string) [][]string {
+func expand(in [][]string, rate int) [][]string {
 	// Expand rows
 	ret := make([][]string, 0)
 
@@ -67,8 +67,9 @@ func expand(in [][]string) [][]string {
 		line := in[i]
 		test := countArr(line, ".")
 		if test == len(line) {
-			ret = append(ret, line)
-			ret = append(ret, line)
+			for e := 0; e < rate; e++ {
+				ret = append(ret, line)
+			}
 		} else {
 			ret = append(ret, line)
 		}
@@ -94,7 +95,7 @@ func expand(in [][]string) [][]string {
 		line := ret[i]
 		c := 0
 		for _, t := range target {
-			line = insert(line, t+c, ".")
+			line = insert(line, t+c, ".", rate)
 			c++
 		}
 		ret[i] = line
@@ -103,12 +104,14 @@ func expand(in [][]string) [][]string {
 	return ret
 }
 
-func insert(arr []string, index int, val string) []string {
+func insert(arr []string, index int, val string, repeat int) []string {
 	if len(arr) == index {
 		return append(arr, val)
 	}
-	arr = append(arr[:index+1], arr[index:]...)
-	arr[index] = val
+	arr = append(arr[:index+repeat], arr[index:]...)
+	for r := 0; r < repeat; r++ {
+		arr[index+r] = val
+	}
 	return arr
 }
 
