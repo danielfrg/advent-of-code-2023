@@ -3,16 +3,17 @@ package main
 import (
 	"advent-of-code-2023/utils"
 	"fmt"
+	"math"
 	"strings"
 )
 
 func main() {
 	test := 0
 
-	test = solve("input-test.txt", "F")
+	test = solve("input-test-part2.txt", "F")
 	utils.Assert(test, 4)
 
-	test = solve("input-test-2.txt", "F")
+	test = solve("input-test-part2-large.txt", "F")
 	utils.Assert(test, 8)
 
 	test = solve("input.txt", "F")
@@ -38,7 +39,32 @@ func solve(fname string, initialShape string) int {
 
 		loop = append(loop, pos)
 	}
-	return len(loop) / 2
+
+	// fmt.Println(loop)
+
+	// Shoelace formula
+	area := interiorArea(loop)
+
+	// pick's theorem - find the number of points in a shape given its area
+	numInteriorPoints := area - 0.5*float64(len(loop)) + 1
+	fmt.Println(numInteriorPoints)
+	return int(numInteriorPoints)
+}
+
+func interiorArea(points [][]int) float64 {
+	// Shoelace formula
+	// https://en.wikipedia.org/wiki/Shoelace_formula
+
+	sum := 0
+	p0 := points[len(points)-1]
+	for _, p1 := range points {
+		// sum += p0.y*p1.x - p0.x*p1.y
+		sum += p0[1]*p1[0] - p0[0]*p1[1]
+		p0 = p1
+		// fmt.Println("_", p0[1]*p1[0]-p0[0]*p1[1])
+	}
+	return math.Abs(float64(sum)) / 2
+
 }
 
 func iter(input [][]string, pos []int, dir string) ([]int, string) {

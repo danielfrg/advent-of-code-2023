@@ -239,3 +239,7 @@ L7JLJL-JLJLJL--JLJ.L
 In this last example, 10 tiles are enclosed by the loop.
 
 Figure out whether you have time to search for the nest by calculating the area within the loop. How many tiles are enclosed by the loop?
+
+Your puzzle answer was 363.
+
+Both parts of this puzzle are complete! They provide two gold stars: \*\*
