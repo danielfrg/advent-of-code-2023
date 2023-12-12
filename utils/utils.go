@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+func Assert(val int, expected int) {
+	if val != expected {
+		log.Fatalf("expected %v but got %v", expected, val)
+	}
+}
+
 func Split(input string, sep rune) []string {
 	// Split and remove empty items
 	splitFn := func(c rune) bool {
