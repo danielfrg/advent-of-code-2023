@@ -12,42 +12,120 @@ func main() {
 	mazes := readInput("input-test.txt")
 
 	// printLines(mazes[0])
-	// printLines(mazes[1])
-
-	// printLines(mazes[0])
-	// fmt.Println(getCol(mazes[0], 2))
-	utils.Assert(findCols(mazes[0]), 5)
+	// utils.Assert(calcMaze(mazes[0]), 5)
+	// utils.Assert(iterate(mazes[0]), 300)
 
 	// printLines(mazes[1])
-	// fmt.Println(getRow(mazes[1], 2))
-	utils.Assert(findRows(mazes[1]), 4)
+	// utils.Assert(calcMaze(mazes[1]), 400)
+	// utils.Assert(iterate(mazes[1]), 100)
 
-	utils.Assert(calc(mazes), 405)
+	// mazes = readInput("input-test2.txt")
+	// fmt.Println(calcMaze(mazes[0]))
+	// fmt.Println(iterate(mazes[0]))
+	// utils.Assert(calcBase(mazes), 32035)
 
 	mazes = readInput("input.txt")
-	fmt.Println(calc(mazes))
+	utils.Assert(calcBase(mazes), 32035)
+	fmt.Println(calcMaze(mazes[0]))
+	fmt.Println(iterate(mazes[0]))
+	// fmt.Println(calc(mazes))
 }
 
 func calc(mazes [][][]string) int {
-
 	val := 0
 	for i, maze := range mazes {
-		cols := findCols(maze)
-		if cols != -1 {
-			val = val + cols
+		v := iterate(maze)
+
+		if v == -1 {
+			fmt.Printf("Maze #%v didnt find mirror\n", i)
 			continue
 		}
 
-		rows := findRows(maze)
-		if rows != -1 {
-			val = val + rows*100
+		val = val + v
+	}
+	return val
+}
+
+func calcBase(mazes [][][]string) int {
+	val := 0
+	for i, maze := range mazes {
+		v := calcMaze(maze)
+
+		if v == -1 {
+			fmt.Printf("Maze #%v didnt find mirror\n", i)
 			continue
 		}
 
-		fmt.Printf("Maze #%v didnt find mirror\n", i)
+		val = val + v
 	}
 
 	return val
+}
+
+func iterate(maze [][]string) int {
+	baseAnswer := calcMaze(maze)
+
+	for i := 0; i < len(maze); i++ {
+		for j := 0; j < len(maze[0]); j++ {
+			m := flip(maze, i, j)
+			// fmt.Println("---", i, j)
+			// printLines(m)
+
+			v := calcMaze2(m, baseAnswer)
+			// fmt.Println(i, j, v)
+
+			if v != -1 && v != baseAnswer {
+				return v
+			}
+			flip(maze, i, j)
+		}
+	}
+
+	return -1
+}
+
+func calcMaze(maze [][]string) int {
+	r := findRows(maze)
+
+	if r != -1 {
+		return r * 100
+	}
+
+	c := findCols(maze)
+
+	if c != -1 {
+		return c
+	}
+
+	return -1
+}
+
+func calcMaze2(maze [][]string, base int) int {
+	r := findRows(maze)
+
+	if r != -1 && r*100 != base {
+		return r * 100
+	}
+
+	c := findCols(maze)
+
+	if c != -1 && r != base {
+		return c
+	}
+
+	return -1
+}
+
+func flip(mat [][]string, i int, j int) [][]string {
+	v := mat[i][j]
+	if v == "." {
+		mat[i][j] = "#"
+	}
+	if v == "#" {
+		mat[i][j] = "."
+	}
+
+	return mat
 }
 
 func findRows(mat [][]string) int {
