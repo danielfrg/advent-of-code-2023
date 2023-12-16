@@ -120,3 +120,7 @@ This process should work if you leave it running long enough, but you're still w
 In the above example, after 1000000000 cycles, the total load on the north support beams is 64.
 
 Run the spin cycle for 1000000000 cycles. Afterward, what is the total load on the north support beams?
+
+Your puzzle answer was 90551.
+
+Both parts of this puzzle are complete! They provide two gold stars: \*\*
