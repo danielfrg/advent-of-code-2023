@@ -50,12 +50,23 @@ func solve(input [][]string) [][]int {
 	// printLines(input)
 	// printLinesInt(counts)
 
-	initial := Move{
-		x:   0,
-		y:   0,
-		dir: "D",
-	}
+	pos := [2]int{0, 0}
+	initial := Move{}
 
+	symbol := input[pos[0]][pos[1]]
+	if symbol == "." || symbol == "-" {
+		initial = Move{
+			x:   0,
+			y:   0,
+			dir: "R",
+		}
+	} else if symbol == "\\" || symbol == "|" {
+		initial = Move{
+			x:   0,
+			y:   0,
+			dir: "D",
+		}
+	}
 	moves := []Move{initial}
 
 	for i := 0; i < len(moves); i++ {
